@@ -19,9 +19,3 @@ This lightweight app allows you to apply translations to static applications dyn
 7. start the development server `./mange.py runserver`
 
 You're ready to go! your dev server is started at port :8000!
-
-
-### Watch for changes in css files
-```
-npm run watch
-```
