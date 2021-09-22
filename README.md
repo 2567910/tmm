@@ -1,6 +1,9 @@
 # Translation Management Microservice
 
-This lightweight app allows you to apply translations to static applications dynamically.
+Todos:
+
+Build chained backend functunality https://github.com/i18next/i18next-chained-backend
+
 
 
 ## Getting started
@@ -16,6 +19,6 @@ This lightweight app allows you to apply translations to static applications dyn
 4. install all the python dependencies with `pip install -r requirements.txt`
 5. create a django superuser `./manage.py createsuperuser`
 6. migrate all changes `./manage.py migrate`
-7. start the development server `./mange.py runserver`
+7. start the development server `./manage.py runserver`
 
 You're ready to go! your dev server is started at port :8000!
