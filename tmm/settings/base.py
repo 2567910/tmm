@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "translation_manager",
+    'translation_manager',
+    'rest_framework',
     'tmm.apps.core',
+    'parler',
 
 ]
 
@@ -54,6 +57,26 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+        'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+PARLER_LANGUAGES = {
+    # Replace None with the SITE_ID when you run a multi-site project with the sites framework.
+    # Each SITE_ID can be added as additional entry in the dictionary.
+    None: (
+        {'code': 'en',},
+        {'code': 'de',}
+    ),
+    'default': {
+        'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
+    }
+}
 
 ROOT_URLCONF = 'tmm.urls'
 
@@ -126,7 +149,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('en', _("English")),
+    ('de', ('Deutsch')),
+    ('it', _('Italian')),
+    ('nl', _('Dutch')),
+    ('fr', _('French')),
+    ('es', _('Spanish')),
+)
 
 TIME_ZONE = 'UTC'
 
@@ -134,11 +166,6 @@ USE_I18N = True
 
 
 USE_TZ = True
-
-LANGUAGES = (
-    ('de', ('Deutsch')),
-    ('en', ('English')),
-)
 
 USE_L10N = True
 
