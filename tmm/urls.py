@@ -3,35 +3,36 @@ from django.urls import path, include
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
-from tmm.apps.core.models import Test
+from tmm.apps.core.models import Translations
 from django.contrib import admin
+from rest_framework.routers import Route, DynamicRoute, SimpleRouter
 
+# TODO: https://www.django-rest-framework.org/api-guide/routers/#drf-nested-routers
 
 class TranslationsSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Test)
+    i18nextStructure = {
+        "text": "Dieser Text ist Deutschw"
+    }
+    translations = TranslatedFieldsField(shared_model=Translations)
+    # translations.objects.all()
+    print(translations)
+    # for translation in translations():
+        # print(translation)
+
 
     class Meta:
-        model = Test
-        fields = ('id', 'translations')
+        model = Translations
+        fields = ('id', 'key', 'translations')
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class TranslationsViewSet(viewsets.ModelViewSet):
-    queryset = Test.objects.all()
+    queryset = Translations.objects.all()
     serializer_class = TranslationsSerializer
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
 router.register(r'translations', TranslationsViewSet)
+
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
