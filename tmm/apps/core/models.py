@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 
+
+
 class Translations(TranslatableModel):
 
     key = models.CharField(_("Key"), unique=True, db_index=True, max_length=255)
