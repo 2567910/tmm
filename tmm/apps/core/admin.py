@@ -16,4 +16,5 @@ from parler.admin import TranslatableAdmin
 
 @admin.register(Translations)
 class TranslationsAdmin(TranslatableAdmin):
-    list_display = (['key'])
+    list_display = (['key', ])
+    search_fields = ('translations__value', 'key')
