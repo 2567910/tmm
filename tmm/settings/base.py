@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'tmm.apps.core',
     'parler',
+    'import_export',
 
 ]
 
