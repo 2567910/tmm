@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'translation_manager',
     'rest_framework',
     'tmm.apps.core',
+    'tmm.apps.translation_management_tool',
     'parler',
     'import_export',
 
