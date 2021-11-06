@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tmm.apps.translation_management_tool.models import Project
+from tmm.apps.translation_management_tool.models import Project, Language, Translation
 
 
 from import_export.admin import ImportExportModelAdmin
@@ -41,7 +41,18 @@ class ProjectAdmin(ImportExportModelAdmin, ExportActionMixin):
 
     search_fields = (['name'])
 
+class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
+    # resources_class = TranslationsResource
 
 
+    # print (translations__value)
+
+    list_display = ('key', 'project')
+
+    search_fields = (['key'])
+
+admin.site.register(Translation, TranslationsAdmin)
 
 admin.site.register(Project, ProjectAdmin)
+
+admin.site.register(Language)
