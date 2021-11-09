@@ -27,10 +27,22 @@ class Project(models.Model):
         return self.name
 
 
-class Translation(models.Model):
-
+class TranslationKey(models.Model):
     key = models.CharField(max_length=255)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Translationkey"
+        verbose_name_plural = "Translationkeys"
+        unique_together = ['project', 'key']
+
+    def __str__(self):
+        return f"{self.key} ({self.project})"
+
+
+class Translation(models.Model):
+
+    key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)
     value = models.CharField(max_length=255, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
@@ -48,7 +60,7 @@ class Translation(models.Model):
     class Meta:
         verbose_name = "Translation"
         verbose_name_plural = "Translations"
-        unique_together = ['project', 'language', 'key']
+        unique_together = ['language', 'key']
 
     def __str__(self):
         return f"{self.key} {self.language}"

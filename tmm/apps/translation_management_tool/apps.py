@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class TranslationManagementToolConfig(AppConfig):
-    name = 'translation_management_tool'
+    name = 'tmm.apps.translation_management_tool'

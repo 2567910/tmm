@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tmm.apps.translation_management_tool.models import Project, Language, Translation
+from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey
 
 
 from import_export.admin import ImportExportModelAdmin
@@ -41,20 +41,36 @@ class ProjectAdmin(ImportExportModelAdmin, ExportActionMixin):
 
     search_fields = (['name'])
 
+# class TranslationKeysAdmin(ImportExportModelAdmin, ExportActionMixin):
+
+#     list_display = ('key', 'project', 'languages')
+#     list_filter = ('language', 'key__project')
+#     search_fields = (['key','get_project_name', 'language', 'value'])
+
+#     @admin.display(description='Projekt', ordering='key__project')
+#     def get_project_name(self, obj):
+#         return obj.key.project
+
 class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
     # resources_class = TranslationsResource
 
 
     # print (translations__value)
 
-    list_display = ('key', 'project', 'language', 'value')
+    list_display = ('key', 'get_project_name', 'language', 'value')
 
-    list_filter = ('project', 'language')
+    list_filter = ('language', 'key__project')
 
-    search_fields = (['key','project', 'language', 'value'])
+    search_fields = (['key','get_project_name', 'language', 'value'])
+
+    @admin.display(description='Projekt', ordering='key__project')
+    def get_project_name(self, obj):
+        return obj.key.project
 
 admin.site.register(Translation, TranslationsAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 
 admin.site.register(Language)
+
+admin.site.register(TranslationKey)
