@@ -5,13 +5,13 @@ from django.db import models
 from django.conf.global_settings import LANGUAGES
 
 class Language(models.Model):
-    languages = models.CharField(max_length=7, choices=LANGUAGES, blank=True)
+    code = models.CharField(max_length=7, choices=LANGUAGES, blank=True)
 
     class Meta:
-        ordering = ['languages']
+        ordering = ['code']
 
     def __str__(self):
-        return self.languages
+        return self.code
 
 
 class Project(models.Model):
@@ -29,20 +29,26 @@ class Project(models.Model):
 
 class Translation(models.Model):
 
-    key = models.CharField(unique=True, db_index=True, max_length=255)
+    key = models.CharField(max_length=255)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    value = models.CharField(max_length=255, null=True)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+
+    # languagesForThisProject = ["1", "2", ""]
+    # # Project.objects.get(name=project)
 
 
-    for label in project.languages: # AttributeError: 'ForeignKey' object has no attribute 'languages'
-         locals()[label] = models.CharField(max_length=255, null=True, blank=True)
+    # for label in languagesForThisProject: # AttributeError: 'ForeignKey' object has no attribute 'languages'
+    #      locals()[label] = models.CharField(max_length=255, null=True, blank=True)
 
-         del locals()['label']
+    #      del locals()['label']
 
     # print(projectLanguages)
 
     class Meta:
         verbose_name = "Translation"
         verbose_name_plural = "Translations"
+        unique_together = ['project', 'language', 'key']
 
     def __str__(self):
-        return self.key
+        return f"{self.key} {self.language}"

@@ -47,9 +47,11 @@ class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
 
     # print (translations__value)
 
-    list_display = ('key', 'project')
+    list_display = ('key', 'project', 'language', 'value')
 
-    search_fields = (['key'])
+    list_filter = ('project', 'language')
+
+    search_fields = (['key','project', 'language', 'value'])
 
 admin.site.register(Translation, TranslationsAdmin)
 
