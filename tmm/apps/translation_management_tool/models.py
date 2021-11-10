@@ -36,8 +36,10 @@ class TranslationKey(models.Model):
         verbose_name_plural = "Translationkeys"
         unique_together = ['project', 'key']
 
+    # Translation.objects.create({})
+
     def __str__(self):
-        return f"{self.key} ({self.project})"
+        return f"{self.key}"
 
 
 class Translation(models.Model):

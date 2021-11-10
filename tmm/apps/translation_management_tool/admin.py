@@ -37,9 +37,14 @@ class ProjectAdmin(ImportExportModelAdmin, ExportActionMixin):
 
     # print (translations__value)
 
-    list_display = (['name'])
-
+    list_display = ('name', 'get_languages')
     search_fields = (['name'])
+
+    def get_languages(self, obj):
+        return ", ".join([lang.code for lang in obj.languages.all()])
+
+
+
 
 # class TranslationKeysAdmin(ImportExportModelAdmin, ExportActionMixin):
 
@@ -67,10 +72,22 @@ class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
     def get_project_name(self, obj):
         return obj.key.project
 
+class TranslationKeyAdmin(admin.ModelAdmin):
+    # resources_class = TranslationsResource
+
+
+    # print (translations__value)
+
+    list_display = ('key', 'project')
+
+    list_filter = (['project'])
+
+    search_fields = (['key','project'])
+
 admin.site.register(Translation, TranslationsAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 
 admin.site.register(Language)
 
-admin.site.register(TranslationKey)
+admin.site.register(TranslationKey, TranslationKeyAdmin)
