@@ -8,12 +8,17 @@ from tmm.apps.translation_management_tool.models import Translation, Translation
 def create_translations_for_langs (sender, instance, created, **kwargs):
     if created:
         for language in instance.project.languages.all():
-            Translation.objects.create(
-                language= language,
-                key = instance,
-                )
+            Translation.objects.create(language= language, key = instance)
 
-# https://docs.djangoproject.com/en/3.2/ref/signals/#:~:text=alias%20being%20used.-,m2m_changed,-%C2%B6
+
+@receiver(post_delete, sender=TranslationKey)
+def create_translations_for_langs (sender, instance, **kwargs):
+    for language in instance.project.languages.all():
+        data_to_be_deleted = Translation.objects.filter(key = instance, language=language)
+        data_to_be_deleted.delete()
+
+
+        # https://docs.djangoproject.com/en/3.2/ref/signals/#:~:text=alias%20being%20used.-,m2m_changed,-%C2%B6
 # If a new language is added to a project it sould
 @receiver(m2m_changed, sender=Project.languages.through)
 def create_translations_for_new_lang (sender, instance, pk_set, action, **kwargs):
@@ -28,14 +33,4 @@ def create_translations_for_new_lang (sender, instance, pk_set, action, **kwargs
                     tranlsation_to_be_removed.delete()
 
                 if action == "pre_add":
-                    Translation.objects.create(
-                        language= changed_lang,
-                        key = key,
-                        )
-
-
-@receiver(post_delete, sender=TranslationKey)
-def create_translations_for_langs (sender, instance, **kwargs):
-    for language in instance.project.languages.all():
-        data_to_be_deleted = Translation.objects.filter(key = instance, language=language)
-        data_to_be_deleted.delete()
+                    Translation.objects.create(language= changed_lang, key = key)
