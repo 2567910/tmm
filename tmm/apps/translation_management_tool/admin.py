@@ -31,7 +31,7 @@ from import_export.fields import Field
 #     def dehydrate_full_title(self, translation):
 #         return '%s' % (translation.translations)
 
-class ProjectAdmin(ImportExportModelAdmin, ExportActionMixin):
+class ProjectAdmin(admin.ModelAdmin):
     # resources_class = TranslationsResource
 
 
@@ -71,6 +71,12 @@ class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
     @admin.display(description='Projekt', ordering='key__project')
     def get_project_name(self, obj):
         return obj.key.project
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
 class TranslationKeyAdmin(admin.ModelAdmin):
     # resources_class = TranslationsResource
