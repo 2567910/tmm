@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'tmm.apps.core',
     'tmm.apps.translation_management_tool',
     'parler',
+    'treebeard',
     'import_export',
 
 ]

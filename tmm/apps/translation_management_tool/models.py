@@ -1,8 +1,11 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.utils.safestring import mark_safe
 
 from django.conf.global_settings import LANGUAGES
+from treebeard.mp_tree import MP_Node
+
 
 class Language(models.Model):
     code = models.CharField(max_length=7, choices=LANGUAGES, blank=True)
@@ -28,7 +31,10 @@ class Project(models.Model):
 
 
 class TranslationKey(models.Model):
-    key = models.CharField(max_length=255)
+    key = models.CharField(max_length=255, help_text=mark_safe(
+        "<b>Do not use the following endings in key: </b><br> $t(KEY_NAME) replace KEY_NAME with a  different translation key to use it in this translation</p>"
+        + "<p><b>Interpolate: </b><br> {{VALUE}} replace VALUE with a variable that is defined for this translation.</p> "
+        + "<p>For more information about the i18next value standart <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
@@ -45,7 +51,7 @@ class TranslationKey(models.Model):
 class Translation(models.Model):
 
     key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)
-    value = models.CharField(max_length=255, null=True)
+    value = models.TextField(max_length=255,blank=True, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
     # languagesForThisProject = ["1", "2", ""]
