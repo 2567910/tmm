@@ -8,6 +8,9 @@ from import_export.admin import ExportActionMixin
 from import_export import resources
 from import_export.fields import Field
 
+from treebeard.admin import TreeAdmin
+from treebeard.forms import movenodeform_factory
+
 
 CONTENT_HELP_TEXT = ' '.join(["<h4 style='padding-left: 0px; font-size: 15px'>Available options:</h4> <p>"
         + "<b>Nesting: </b><br> $t(KEY_NAME) replace KEY_NAME with a  different translation key to use it in this translation</p>"
@@ -94,11 +97,12 @@ class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
     # def has_delete_permission(self, request, obj=None):
     #     return False
 
-class TranslationKeyAdmin(admin.ModelAdmin):
+class TranslationKeyAdmin(TreeAdmin):
     # resources_class = TranslationsResource
 
 
     # print (translations__value)
+    form = movenodeform_factory(TranslationKey)
 
     list_display = ('key', 'project')
 

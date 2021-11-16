@@ -30,13 +30,14 @@ class Project(models.Model):
         return self.name
 
 
-class TranslationKey(models.Model):
+class TranslationKey(MP_Node): #
     key = models.CharField(max_length=255, help_text=mark_safe(
         "<b>Do not use the following endings in key: </b><br> $t(KEY_NAME) replace KEY_NAME with a  different translation key to use it in this translation</p>"
         + "<p><b>Interpolate: </b><br> {{VALUE}} replace VALUE with a variable that is defined for this translation.</p> "
         + "<p>For more information about the i18next value standart <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
+    # node_order_by = ['key']
     class Meta:
         verbose_name = "Translationkey"
         verbose_name_plural = "Translationkeys"
