@@ -46,6 +46,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_languages')
     search_fields = (['name'])
 
+    @admin.display(description='Languages')
     def get_languages(self, obj):
         return ", ".join([lang.code for lang in obj.languages.all()])
 
@@ -68,7 +69,7 @@ class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
 
     # print (translations__value)
 
-    list_display = ('key', 'get_project_name', 'language', 'value')
+    list_display = ('get_full_key', 'get_project_name', 'language', 'value')
 
     list_filter = ('language', 'key__project')
 
@@ -80,6 +81,15 @@ class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
 
     def has_add_permission(self, request, obj=None):
         return False
+
+    @admin.display(description='Key')
+    def get_full_key(self, obj):
+        if (obj.key.get_ancestors()):
+            return ".".join([lang.key for lang in obj.key.get_ancestors()]) + "." + obj.key.key
+        else:
+            return obj.key.key
+
+
 
     """
     Add your other customizations
