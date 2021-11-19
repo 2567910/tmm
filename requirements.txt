@@ -10,3 +10,4 @@ django-parler-rest==2.1
 django-cors-headers==3.9.0
 django-import-export==2.6.1
 django-treebeard==4.5.1
+django-simple-history==3.0.0

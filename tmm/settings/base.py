@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'tmm.apps.translation_management_tool',
     'parler',
     'treebeard',
+    'simple_history',
     'import_export',
 
 ]
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True

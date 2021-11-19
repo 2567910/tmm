@@ -10,7 +10,7 @@ from import_export.fields import Field
 
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
-
+from simple_history.admin import SimpleHistoryAdmin
 
 CONTENT_HELP_TEXT = ' '.join(["<h4 style='padding-left: 0px; font-size: 15px'>Available options:</h4> <p>"
         + "<b>Nesting: </b><br> $t(KEY_NAME) replace KEY_NAME with a  different translation key to use it in this translation</p>"
@@ -63,7 +63,7 @@ class ProjectAdmin(admin.ModelAdmin):
 #     def get_project_name(self, obj):
 #         return obj.key.project
 
-class TranslationsAdmin(ImportExportModelAdmin, ExportActionMixin):
+class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     # resources_class = TranslationsResource
 
 

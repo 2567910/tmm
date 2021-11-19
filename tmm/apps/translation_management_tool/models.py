@@ -5,6 +5,9 @@ from django.utils.safestring import mark_safe
 
 from django.conf.global_settings import LANGUAGES
 from treebeard.mp_tree import MP_Node
+from simple_history.models import HistoricalRecords
+from simple_history import register
+
 
 
 class Language(models.Model):
@@ -54,6 +57,7 @@ class Translation(models.Model):
     key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)
     value = models.TextField(max_length=255,blank=True, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
     # languagesForThisProject = ["1", "2", ""]
     # # Project.objects.get(name=project)
