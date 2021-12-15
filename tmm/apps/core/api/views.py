@@ -6,7 +6,7 @@ from rest_framework.response import Response
 import json
 
 class TranslationsView(APIView):
-    # GET /translations/?lang=en
+    # GET /translations/project/lang
     serializer_class = TranslationsSerializer
 
     def get_queryset(self):
@@ -26,32 +26,13 @@ class TranslationsView(APIView):
         try:
             lang = self.kwargs.get("lang")
             project = self.kwargs.get("project")
-
-            print(lang)
             translations_raw = Translation.objects.all()
-            print(translations_raw)
-
 
             for translation in translations_raw:
-                if translation.key.project.name == project:
-                    if translation.language.code == lang:
-                        i18nextDict.update({get_full_key(translation): translation.value})
-                        # i18nextDict[translation.key.key] = translation.value
-            print(i18nextDict)
-
-            # finalJSON = json.dumps(i18nextDict)
-
-            # if (obj.key.get_ancestors()):
-            #     return ".".join([lang.key for lang in obj.key.get_ancestors()]) + "." + obj.key.key
-            # else:
-            #     return obj.key.key
-
+                if translation.key.project.name == project and translation.language.code == lang:
+                    i18nextDict.update({get_full_key(translation): translation.value})
 
             return Response(i18nextDict)
         except:
             print("ERROR")
-            return Response(i18nextDict)
-
-
-        # lang = self.get_queryset()
-        # serializer = TranslationsSerializer(lang, many=True)
+            return Response({"error": "No translations found"})
