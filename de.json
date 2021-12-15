@@ -1,7 +1,12 @@
 {
     "key": "value",
     "keyDeep": {
-      "inner": "value"
+      "keyDeep3": {
+        "inner": "value"
+      },
+      "asd" : {
+        "inner2": "hello"
+      }
     },
     "keyNesting": "reuse $t(keyDeep.inner)",
     "keyInterpolate": "replace this {{value}}",
@@ -20,3 +25,26 @@
     "keyWithArrayValue": ["multipe", "things"],
     "keyWithObjectValue": { "valueA": "return this with valueB", "valueB": "more text" }
 }
+
+
+keysArray = [keyDeep, keyDeep3, inner], value = "value"
+
+
+
+{
+  "key": "value",
+  "keyDeep": {
+    "keyDeep3": {
+      "inner": "value"
+    },
+    "asd" : {
+      "inner2": "hello"
+    }
+  },
+  "keyNesting": "reuse $t(keyDeep.inner)",
+}
+
+
+-> key, keyDeep, keyNesting
+-> keyDeep3 (keyDeep), asd(keyDeep)
+-> inner (keyDeep, keyDeep3), inner2 (keyDeep, asd)

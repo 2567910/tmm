@@ -44,7 +44,7 @@ class TranslationKey(MP_Node): #
     class Meta:
         verbose_name = "Translationkey"
         verbose_name_plural = "Translationkeys"
-        unique_together = ['project', 'key']
+        # unique_together = ['project', 'key']
 
     # Translation.objects.create({})
 
@@ -55,7 +55,7 @@ class TranslationKey(MP_Node): #
 class Translation(models.Model):
 
     key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)
-    value = models.TextField(max_length=255,blank=True, null=True)
+    value = models.TextField(max_length=255, blank=True, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     history = HistoricalRecords()
 
