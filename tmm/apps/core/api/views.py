@@ -3,18 +3,7 @@ from tmm.apps.translation_management_tool.models import Translation
 from tmm.apps.core.api.serializer import TranslationsSerializer
 from rest_framework.response import Response
 
-from addict import Dict
-
-class TranslationsView(APIView):
-    # GET /translations/project/lang
-    serializer_class = TranslationsSerializer
-
-    def get_queryset(self):
-        translations = Translation.objects.all()
-        return translations
-
-    def get(self, request, *args, **kwargs):
-        def get_keys(obj):
+def get_keys(obj):
             arr = []
             if (obj.key.get_ancestors()):
                 for an in obj.key.get_ancestors():
@@ -25,19 +14,33 @@ class TranslationsView(APIView):
                 arr.append(obj.key.key)
                 return arr
 
-        def set_value_in_dict_recursive(i18nextDict, keysArray, value):
-            if (len(keysArray) == 1):
-                i18nextDict[keysArray[0]] = value
-            else:
-                if (type(i18nextDict[keysArray[0]]) is not dict):
-                    i18nextDict[keysArray[0]] = dict()
-                i18nextDict[keysArray[0]] = set_value_in_dict_recursive(
-                    i18nextDict[keysArray[0]], keysArray[1:], value)
-            return i18nextDict
+def set_value_in_dict_recursive(i18nextDict, keysArray, value):
+    if (len(keysArray) == 1):
+        i18nextDict[keysArray[0]] = value
+    else:
+        if (type(i18nextDict[keysArray[0]]) is not dict):
+            i18nextDict[keysArray[0]] = dict()
+        set_value_in_dict_recursive(
+            i18nextDict[keysArray[0]], keysArray[1:], value)
+    return i18nextDict
+
+class TranslationsView(APIView):
+    # GET /translations/project/lang
+    serializer_class = TranslationsSerializer
+
+    def get_queryset(self):
+        translations = Translation.objects.all()
+        return translations
+
+    def get(self, request, *args, **kwargs):
+
+
+
 
         try:
             lang = self.kwargs.get("lang")
             project = self.kwargs.get("project")
+
             translations_raw = Translation.objects.all().filter(
                 language__code=lang, key__project__name=project)
             translation_list = list(translations_raw)

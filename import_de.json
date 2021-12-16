@@ -1,5 +1,4 @@
 {
-    "key": "value",
     "keyDeep": {
       "keyDeep3": {
         "inner": "value"
@@ -22,29 +21,5 @@
     "keyPluralMultipleEgArabic_few": "the plural form 3",
     "keyPluralMultipleEgArabic_many": "the plural form 4",
     "keyPluralMultipleEgArabic_other": "the plural form 5",
-    "keyWithArrayValue": ["multipe", "things"],
-    "keyWithObjectValue": { "valueA": "return this with valueB", "valueB": "more text" }
+    "keyWithArrayValue": ["multipe", "things"]
 }
-
-
-keysArray = [keyDeep, keyDeep3, inner], value = "value"
-
-
-
-{
-  "key": "value",
-  "keyDeep": {
-    "keyDeep3": {
-      "inner": "value"
-    },
-    "asd" : {
-      "inner2": "hello"
-    }
-  },
-  "keyNesting": "reuse $t(keyDeep.inner)",
-}
-
-
--> key, keyDeep, keyNesting
--> keyDeep3 (keyDeep), asd(keyDeep)
--> inner (keyDeep, keyDeep3), inner2 (keyDeep, asd)

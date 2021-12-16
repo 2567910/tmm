@@ -44,13 +44,12 @@ class TranslationKey(MP_Node): #
     class Meta:
         verbose_name = "Translationkey"
         verbose_name_plural = "Translationkeys"
-        # unique_together = ['project', 'key']
+        unique_together = ['project', 'key', 'depth']
 
     # Translation.objects.create({})
 
     def __str__(self):
-        return f"{self.key}"
-
+        return f"{self.project.name}: {self.key} ({self.depth})"
 
 class Translation(models.Model):
 
