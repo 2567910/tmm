@@ -1,0 +1,35 @@
+[
+{
+  "model": "translation_management_tool.language",
+  "pk": 1,
+  "fields": {
+    "code": "de"
+  }
+},
+{
+  "model": "translation_management_tool.language",
+  "pk": 2,
+  "fields": {
+    "code": "en"
+  }
+},
+{
+  "model": "translation_management_tool.language",
+  "pk": 3,
+  "fields": {
+    "code": "cs"
+  }
+},
+
+{
+  "model": "translation_management_tool.project",
+  "pk": 4,
+  "fields": {
+    "name": "import",
+    "languages": [
+      1,
+      2
+    ]
+  }
+}
+]

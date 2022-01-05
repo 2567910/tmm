@@ -8,7 +8,7 @@ from tmm.apps.translation_management_tool.models import Translation, Translation
 def create_translations_for_langs (sender, instance, created, **kwargs):
     if created:
         for language in instance.project.languages.all():
-            Translation.objects.create(language= language, key = instance)
+            Translation.objects.create(language=language, key=instance)
 
 
 @receiver(post_delete, sender=TranslationKey)

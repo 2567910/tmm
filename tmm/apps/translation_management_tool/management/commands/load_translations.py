@@ -46,7 +46,10 @@ class Command(BaseCommand):
 
                 filename = os.path.basename(filepath)
                 project_lang = os.path.splitext(filename)[0]
-                [project_name, lang_str] = project_lang.split('_')  # returns array
+                project_and_lang = project_lang.split('_')  # returns array
+                project_name = project_and_lang[0]
+                lang_str = project_and_lang[1]
+
 
                 LOGGER.info('Loading translation for project %s and language %s...', project_name, lang_str)
 
@@ -63,26 +66,20 @@ class Command(BaseCommand):
                     deleted = Translation.objects.filter(key__project=project, language=lang).delete()
                     LOGGER.warning('DELETED %d translations', deleted[0])
 
-                #TODO: Get for each entry: key, value and parent
-
-                # {
-                #    "general": { # namespace ns
-                #        "save": "Speichern",
-                #        "general": "Generell"
-                #    }
-                #    "bla": "blubb"
-                #}
 
                 for raw_key, raw_value in rawDict.items():  # root/namespace level, e.g. "general"
                     LOGGER.debug('>>>>>>>>>< in loop --- %s : %s', raw_key, raw_value)
+
                     root_key = TranslationKey.objects.filter(key=raw_key, project=project, depth=1).first()
                     if not root_key:
                         root_key = TranslationKey.add_root(key=raw_key, project=project)
                     LOGGER.debug('>>>>>>>>>< adding root %s', root_key)
+
                     if isinstance(raw_value, str):
                         # this is a translation
                         LOGGER.debug('>>>>>>>>>< sinstance if str %s - %s: %s', lang, root_key, raw_value)
-                        Translation.objects.create(key=root_key, value=raw_value, language=lang)
+                        Translation.objects.filter(key=root_key, language=lang).update(value=raw_value)
+                        # Translation.objects.create(key=root_key, value=raw_value, language=lang)
                         LOGGER.debug('>>>>>>>>>< adding translation %s - %s: %s', lang, root_key, raw_value)
                     elif isinstance(raw_value, dict):
                         LOGGER.debug('>>>>>>>>>< is dict --- %s : %s', raw_value, raw_value)

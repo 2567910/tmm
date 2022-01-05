@@ -106,7 +106,7 @@ User:
 
 Jobs:
 
-    $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary jobs > blu_beyond/fixtures/jobs.json
+    $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary translation_management_tool > tmm/apps/translation_management_tool/fixtures/project.json
 
 Wagtail, grundlegendes Setup mit Homepage:
 

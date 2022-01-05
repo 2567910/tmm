@@ -1,15 +1,15 @@
 {
     "keyDeep": {
       "keyDeep3": {
-        "inner": "value"
+        "inner": "value 2"
       },
       "asd" : {
-        "inner2": "hello"
+        "inner2": "hello 2"
       }
     },
-    "keyNesting": "reuse $t(keyDeep.inner)",
-    "keyInterpolate": "replace this {{value}}",
-    "keyInterpolateUnescaped": "replace this {{- value}}",
+    "keyNesting": "reuse $t(keyDeep.inner) 2",
+    "keyInterpolate": "replace this {{value}} 2",
+    "keyInterpolateUnescaped": "replace this {{- value}} 2",
     "keyInterpolateWithFormatting": "replace this {{value, format}}",
     "keyContext_male": "the male variant",
     "keyContext_female": "the female variant",
