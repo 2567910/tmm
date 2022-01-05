@@ -10,7 +10,7 @@ from tmm.apps.translation_management_tool.models import Project, TranslationKey,
 
 LOGGER = logging.getLogger(__name__)
 
-# There is a Problem with values that come form nested Keys!!
+
 #./manage.py load_translations import_de.json
 
 

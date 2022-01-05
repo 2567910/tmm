@@ -3,16 +3,18 @@ from tmm.apps.translation_management_tool.models import Translation
 from tmm.apps.core.api.serializer import TranslationsSerializer
 from rest_framework.response import Response
 
+
 def get_keys(obj):
-            arr = []
-            if (obj.key.get_ancestors()):
-                for an in obj.key.get_ancestors():
-                    arr.append(an.key)
-                arr.append(obj.key.key)
-                return arr
-            else:
-                arr.append(obj.key.key)
-                return arr
+    arr = []
+    if (obj.key.get_ancestors()):
+        for an in obj.key.get_ancestors():
+            arr.append(an.key)
+        arr.append(obj.key.key)
+        return arr
+    else:
+        arr.append(obj.key.key)
+        return arr
+
 
 def set_value_in_dict_recursive(i18nextDict, keysArray, value):
     if (len(keysArray) == 1):
@@ -24,6 +26,7 @@ def set_value_in_dict_recursive(i18nextDict, keysArray, value):
             i18nextDict[keysArray[0]], keysArray[1:], value)
     return i18nextDict
 
+
 class TranslationsView(APIView):
     # GET /translations/project/lang
     serializer_class = TranslationsSerializer
@@ -33,9 +36,6 @@ class TranslationsView(APIView):
         return translations
 
     def get(self, request, *args, **kwargs):
-
-
-
 
         try:
             lang = self.kwargs.get("lang")
@@ -53,7 +53,8 @@ class TranslationsView(APIView):
             for translation in translations_sortet_by_depth:
                 keys = get_keys(translation)
 
-                i18nextDict = set_value_in_dict_recursive(i18nextDict, keys, translation.value)
+                i18nextDict = set_value_in_dict_recursive(
+                    i18nextDict, keys, translation.value)
                 print(i18nextDict)
 
             return Response(i18nextDict)

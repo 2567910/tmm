@@ -66,6 +66,13 @@ class ProjectAdmin(admin.ModelAdmin):
 class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     # resources_class = TranslationsResource
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # if request.user.is_superuser:
+        #     return qs
+        # else:
+
+        return qs.filter(key=1)
 
     # print (translations__value)
 

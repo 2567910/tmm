@@ -43,10 +43,6 @@ class TranslationsAdmin(TranslatableAdmin, ImportExportModelAdmin, ExportActionM
             'fields': ('key', 'value'),
         }),
     )
-
     search_fields = ('translations__value', 'key')
-
-
-
 
 admin.site.register(Translations, TranslationsAdmin)
