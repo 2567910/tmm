@@ -10,8 +10,8 @@ from tmm.apps.translation_management_tool.models import Project, TranslationKey,
 
 LOGGER = logging.getLogger(__name__)
 
-# Write a custom command to load translations from a json file  into the database
-
+# There is a Problem with values that come form nested Keys!!
+#./manage.py load_translations import_de.json
 
 
 
@@ -68,21 +68,21 @@ class Command(BaseCommand):
 
 
                 for raw_key, raw_value in rawDict.items():  # root/namespace level, e.g. "general"
-                    LOGGER.debug('>>>>>>>>>< in loop --- %s : %s', raw_key, raw_value)
+                    LOGGER.debug('>>> in loop --- %s : %s', raw_key, raw_value)
 
                     root_key = TranslationKey.objects.filter(key=raw_key, project=project, depth=1).first()
                     if not root_key:
                         root_key = TranslationKey.add_root(key=raw_key, project=project)
-                    LOGGER.debug('>>>>>>>>>< adding root %s', root_key)
+                    LOGGER.debug('>>> adding root %s', root_key)
 
                     if isinstance(raw_value, str):
                         # this is a translation
-                        LOGGER.debug('>>>>>>>>>< sinstance if str %s - %s: %s', lang, root_key, raw_value)
+                        LOGGER.debug('>>> sinstance if str %s - %s: %s', lang, root_key, raw_value)
                         Translation.objects.filter(key=root_key, language=lang).update(value=raw_value)
-                        # Translation.objects.create(key=root_key, value=raw_value, language=lang)
-                        LOGGER.debug('>>>>>>>>>< adding translation %s - %s: %s', lang, root_key, raw_value)
+
+                        LOGGER.debug('>>> adding translation %s - %s: %s', lang, root_key, raw_value)
                     elif isinstance(raw_value, dict):
-                        LOGGER.debug('>>>>>>>>>< is dict --- %s : %s', raw_value, raw_value)
+                        LOGGER.debug('>>> is dict --- %s : %s', raw_value, raw_value)
                         # recurse into children
                         self.create_child(root_key, raw_value, lang)
                     else:
@@ -104,12 +104,13 @@ class Command(BaseCommand):
             child_node = parent_node.get_children().filter(key=child_key, project=parent_node.project).first()
             if not child_node:
                 child_node = parent_node.add_child(key=child_key, project=parent_node.project)
-            LOGGER.debug('>>>>>>>>>< adding child %s', child_node.key)
+            LOGGER.debug('>>> adding child %s', child_node.key)
             if isinstance(child_value, str):
                 # this is a translation
-                LOGGER.debug('>>>>>>>>>< adding child %s', child_node)
+                LOGGER.debug('>>> adding child %s', child_node)
                 # Translation.objects.create(key=child_node, value=child_value, language=lang)
-                LOGGER.debug('>>>>>>>>>< adding translation %s - %s: %s', lang, child_node, child_value)
+                Translation.objects.filter(key=child_node, language=lang).update(value=child_value)
+                LOGGER.debug('>>> adding translation %s - %s: %s', lang, child_node, child_value)
             elif isinstance(child_value, dict):
                 self.create_child(child_node, child_value, lang)
             else:
