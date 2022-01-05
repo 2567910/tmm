@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db import transaction
 
 from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey
 
@@ -68,11 +69,23 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
+        final_qs = []
         # if request.user.is_superuser:
         #     return qs
         # else:
 
-        return qs.filter(key=1)
+        #check if the key in queryset has a child element
+        for tanslation in qs:
+            print(TranslationKey.objects.get(pk=tanslation.key.pk).get_children())
+            if TranslationKey.objects.get(pk=tanslation.key.pk).get_children():
+                #This means the Trnaslation has no child elements
+                qs = qs.exclude(key__pk=tanslation.key.pk)
+                # qs.pop(tanslation)
+
+        return qs
+
+
+        # return qs.filter(key=1)
 
     # print (translations__value)
 
