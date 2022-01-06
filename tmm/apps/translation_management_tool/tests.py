@@ -21,7 +21,9 @@ class ImportTest(TestCase):
         LOGGER.info('nested Key %s', nested_key)
         self.assertEqual(nested_key.key, "inner")
 
-        value_of_key = nested_key.translation_set.filter(language__code = "en").first()
+        value_of_key = nested_key.translation_set.filter(language__code = "de").first()
+        # Translation.objects.filter(key=nested_key, language="en").first()
+        # nested_key.translation_set.filter(language__code = "en").first()
         self.assertIsNotNone(value_of_key)
         LOGGER.info('Value of translation %s', value_of_key)
         self.assertEqual(value_of_key.value, "value")

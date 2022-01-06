@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from django.conf.urls import url
+from django.contrib import admin
 
-# Create your views here.
+
+def my_view(request):
+    return render(request, 'admin/preferences/preferences.html')

@@ -1,11 +1,19 @@
 from django.contrib import admin
 from django.db import transaction
+from django.db import models
+from django.contrib.admin import AdminSite
+from etc.admin import CustomModelPage
+from django import forms
+
+from tmm.apps.translation_management_tool.management.commands.load_translations import LoadTranslationsCommand
+
 
 from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey
 
 
 from import_export.admin import ImportExportModelAdmin
 from import_export.admin import ExportActionMixin
+from tmm.apps.translation_management_tool.views import my_view
 from import_export import resources
 from import_export.fields import Field
 
@@ -139,6 +147,39 @@ class TranslationKeyAdmin(TreeAdmin):
     list_filter = (['project'])
 
     search_fields = (['key','project'])
+
+
+class MyPage(CustomModelPage):
+
+        title = 'Expert import'  # set page title
+
+        # Define some fields you want to proccess data from.
+        project = models.ForeignKey(Project, on_delete=models.CASCADE)
+        language = models.ForeignKey(Language, on_delete=models.CASCADE)
+
+        file = models.FileField()
+
+
+
+        def save(self):
+            # Here implement data handling.
+
+            # run the LoadTranslationsCommand with the uploaded file
+
+            command = LoadTranslationsCommand()
+            print(self.file)
+            command.handle(self.file, self.project, self.language)
+
+            super().save()
+
+    # Register the page within Django admin.
+
+MyPage.register()
+
+# you can register your models on this site object as usual, if needed
+# site.register(Model, ModelAdmin)
+
+# admin.site.register(CustomImport, TemplateAdmin)
 
 admin.site.register(Translation, TranslationsAdmin)
 

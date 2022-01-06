@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'etc',
     'tmm.apps.core',
     'tmm.apps.translation_management_tool',
     'parler',

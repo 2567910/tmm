@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 
-class Command(BaseCommand):
+class LoadTranslationsCommand(BaseCommand):
     help = 'Load translations from JSON file'
 
 
