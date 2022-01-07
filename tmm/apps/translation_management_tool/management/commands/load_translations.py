@@ -15,14 +15,17 @@ LOGGER = logging.getLogger(__name__)
 
 
 
-class LoadTranslationsCommand(BaseCommand):
+class Command(BaseCommand):
     help = 'Load translations from JSON file'
 
 
     def add_arguments(self, parser):
         parser.add_argument('file', type=str)
+        parser.add_argument('lang', type=str)
+        parser.add_argument('project', type=str)
         parser.add_argument('--clear', '-c', action='store_true',
                             help='Clear existing objects before loading')
+
 
     def handle(self, *args, **options):
 
@@ -37,6 +40,8 @@ class LoadTranslationsCommand(BaseCommand):
         #         get_formated_data_recursive(
         #             formatedDict[keysArray[0]], keysArray[1:], value)
         #     return formatedDict
+
+
 
         filepath = options['file']
         LOGGER.info('Loading tags from %s ...', filepath)

@@ -4,8 +4,8 @@ from django.db import models
 from django.contrib.admin import AdminSite
 from etc.admin import CustomModelPage
 from django import forms
-
-from tmm.apps.translation_management_tool.management.commands.load_translations import LoadTranslationsCommand
+from django.core import management
+# from tmm.apps.translation_management_tool.management.commands.load_translations import LoadTranslationsCommand
 
 
 from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey
@@ -77,14 +77,9 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        final_qs = []
-        # if request.user.is_superuser:
-        #     return qs
-        # else:
 
         #check if the key in queryset has a child element
         for tanslation in qs:
-            print(TranslationKey.objects.get(pk=tanslation.key.pk).get_children())
             if TranslationKey.objects.get(pk=tanslation.key.pk).get_children():
                 #This means the Trnaslation has no child elements
                 qs = qs.exclude(key__pk=tanslation.key.pk)
@@ -165,10 +160,11 @@ class MyPage(CustomModelPage):
             # Here implement data handling.
 
             # run the LoadTranslationsCommand with the uploaded file
+            management.call_command('load_translations', self.file, '--clear', '--noinput')
 
-            command = LoadTranslationsCommand()
-            print(self.file)
-            command.handle(self.file, self.project, self.language)
+            # command = LoadTranslationsCommand()
+            # print(self.file)
+            # command.handle(self.file, self.project, self.language)
 
             super().save()
 
