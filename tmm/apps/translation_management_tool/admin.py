@@ -8,7 +8,7 @@ from django.core import management
 # from tmm.apps.translation_management_tool.management.commands.load_translations import LoadTranslationsCommand
 
 
-from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey
+from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey, JSONImport
 
 
 from import_export.admin import ImportExportModelAdmin
@@ -59,6 +59,16 @@ class ProjectAdmin(admin.ModelAdmin):
     def get_languages(self, obj):
         return ", ".join([lang.code for lang in obj.languages.all()])
 
+class JSONImportAdmin(admin.ModelAdmin):
+    # resources_class = TranslationsResource
+
+    readonly_fields = (['created_at'])
+    # print (translations__value)
+
+    list_display = ('created_at', 'project', 'language')
+    search_fields = (['created_at', 'project', 'language'])
+
+
 
 
 
@@ -74,6 +84,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     # resources_class = TranslationsResource
+    readonly_fields = (['key', 'language'])
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -144,33 +155,33 @@ class TranslationKeyAdmin(TreeAdmin):
     search_fields = (['key','project'])
 
 
-class MyPage(CustomModelPage):
+# class MyPage(CustomModelPage):
 
-        title = 'Expert import'  # set page title
+#         title = 'Expert import'  # set page title
 
-        # Define some fields you want to proccess data from.
-        project = models.ForeignKey(Project, on_delete=models.CASCADE)
-        language = models.ForeignKey(Language, on_delete=models.CASCADE)
+#         # Define some fields you want to proccess data from.
+#         project = models.ForeignKey(Project, on_delete=models.CASCADE)
+#         language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
-        file = models.FileField()
+#         file = models.FileField()
 
 
 
-        def save(self):
-            # Here implement data handling.
+#         def save(self):
+#             # Here implement data handling.
 
-            # run the LoadTranslationsCommand with the uploaded file
-            management.call_command('load_translations', self.file, '--clear', '--noinput')
+#             # run the LoadTranslationsCommand with the uploaded file
+#             management.call_command('load_translations', self.file, '--clear', '--noinput')
 
-            # command = LoadTranslationsCommand()
-            # print(self.file)
-            # command.handle(self.file, self.project, self.language)
+#             # command = LoadTranslationsCommand()
+#             # print(self.file)
+#             # command.handle(self.file, self.project, self.language)
 
-            super().save()
+#             super().save()
 
-    # Register the page within Django admin.
+#     # Register the page within Django admin.
 
-MyPage.register()
+# MyPage.register()
 
 # you can register your models on this site object as usual, if needed
 # site.register(Model, ModelAdmin)
@@ -180,6 +191,8 @@ MyPage.register()
 admin.site.register(Translation, TranslationsAdmin)
 
 admin.site.register(Project, ProjectAdmin)
+
+admin.site.register(JSONImport, JSONImportAdmin)
 
 admin.site.register(Language)
 

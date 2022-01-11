@@ -31,29 +31,17 @@ class Command(BaseCommand):
 
         resultDict = {}
 
-        # def get_formated_data_recursive(formatedDict, key, value):
-        #     if (type(rawDict[key]) is not dict):
-        #         formatedDict[keysArray[0]] = value
-        #     else:
-        #         if (type(formatedDict[keysArray[0]]) is not dict):
-        #             formatedDict[keysArray[0]] = dict()
-        #         get_formated_data_recursive(
-        #             formatedDict[keysArray[0]], keysArray[1:], value)
-        #     return formatedDict
-
-
-
         filepath = options['file']
         LOGGER.info('Loading tags from %s ...', filepath)
         with transaction.atomic():
             with open(filepath, 'r') as json_in:
                 rawDict = json.load(json_in)
 
-                filename = os.path.basename(filepath)
-                project_lang = os.path.splitext(filename)[0]
-                project_and_lang = project_lang.split('_')  # returns array
-                project_name = project_and_lang[0]
-                lang_str = project_and_lang[1]
+                # filename = os.path.basename(filepath)
+                # project_lang = os.path.splitext(filename)[0]
+                # project_and_lang = project_lang.split('_')  # returns array
+                project_name = options['project']
+                lang_str = options['lang']
 
 
                 LOGGER.info('Loading translation for project %s and language %s...', project_name, lang_str)

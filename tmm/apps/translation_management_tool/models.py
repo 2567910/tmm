@@ -1,4 +1,5 @@
 from django.db import models
+from django.core import management
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.safestring import mark_safe
 
@@ -6,7 +7,7 @@ from django.conf.global_settings import LANGUAGES
 from treebeard.mp_tree import MP_Node
 from simple_history.models import HistoricalRecords
 from simple_history import register
-
+from django.utils import timezone
 
 
 class Language(models.Model):
@@ -75,3 +76,39 @@ class Translation(models.Model):
 
     def __str__(self):
         return f"{self.key} {self.language}"
+
+class JSONImport(models.Model):
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    file = models.FileField()
+    created_at = models.DateTimeField(default=timezone.now)
+    # languagesForThisProject = ["1", "2", ""]
+    # # Project.objects.get(name=project)
+
+    def save(self):
+            # Here implement data handling.
+
+            # run the LoadTranslationsCommand with the uploaded file
+            management.call_command('load_translations', self.file, self.language.code,  self.project.name)
+
+            # command = LoadTranslationsCommand()
+            # print(self.file)
+            # command.handle(self.file, self.project, self.language)
+
+            super().save()
+
+    # for label in languagesForThisProject: # AttributeError: 'ForeignKey' object has no attribute 'languages'
+    #      locals()[label] = models.CharField(max_length=255, null=True, blank=True)
+
+    #      del locals()['label']
+
+    # print(projectLanguages)
+
+    class Meta:
+        verbose_name = "JSON Import"
+        verbose_name_plural = "JSON Imports"
+        unique_together = ['language', 'project', 'created_at']
+
+    def __str__(self):
+        return f"{self.project} {self.language} {self.created_at}"
