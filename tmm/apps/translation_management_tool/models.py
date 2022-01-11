@@ -2,7 +2,7 @@ from django.db import models
 from django.core import management
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.safestring import mark_safe
-
+import json
 from django.conf.global_settings import LANGUAGES
 from treebeard.mp_tree import MP_Node
 from simple_history.models import HistoricalRecords
@@ -90,13 +90,17 @@ class JSONImport(models.Model):
             # Here implement data handling.
 
             # run the LoadTranslationsCommand with the uploaded file
-            management.call_command('load_translations', self.file, self.language.code,  self.project.name)
+            print(self.file.path)
+            # print("awDict1")
+            # with open(self.file.path, 'r') as json_in:
+            #     print("awDict2")
+            #     rawDict = json.load(json_in)
+            #     print(rawDict)
 
-            # command = LoadTranslationsCommand()
-            # print(self.file)
-            # command.handle(self.file, self.project, self.language)
 
             super().save()
+
+            management.call_command('load_translations', self.file.path, self.language.code,  self.project.name)
 
     # for label in languagesForThisProject: # AttributeError: 'ForeignKey' object has no attribute 'languages'
     #      locals()[label] = models.CharField(max_length=255, null=True, blank=True)
