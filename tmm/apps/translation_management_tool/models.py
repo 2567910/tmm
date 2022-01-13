@@ -37,7 +37,6 @@ class TranslationKey(MP_Node): #
     class Meta:
         verbose_name = "Translationkey"
         verbose_name_plural = "Translationkeys"
-        unique_together = ['project', 'key', 'depth']
 
     def __str__(self):
         return f"{self.project.name}: {self.key} ({self.depth})"
