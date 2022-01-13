@@ -1,7 +1,6 @@
-# Translation Managmant Microservice (i18next Backend)
-This project provides a Django application that lets you manage translations and diver them to any application that supports the i18next JSON format. This project is intended to be a Free open source and Self-hosted Docker alternative to existing SaaS Solutions (e.g. locize.com).
+# Translation Managmant Microservice
+This project provides a Django application that lets you manage translations and deliver them via REST API to any application that supports the i18next JSON format. This project is intended to be a Free open source and Self-hosted Docker alternative to existing SaaS Solutions (e.g. locize.com).
 
-<!-- TOC -->
 
 - [Setup development environment](#setup-development-environment)
 - [Setup production environment](#setup-production-environment)
@@ -9,12 +8,8 @@ This project provides a Django application that lets you manage translations and
 - [License](#license)
 - [Links](#links)
 
-<!-- /TOC -->
 
-<br /><br /><br /><br /><br />
-
-
-
+<br /><br /><br />
 
 ## Setup development environment
 ### Setup Django application (local)
@@ -50,7 +45,7 @@ Next you will need to setup the database.
 
 ### Setup Database (local)
 
-Open another terminal window and go to the root directory of the project (`/tmm`) and run:
+Open another terminal window and go to the root directory of the project and run:
 ```sh
 $ docker-compose up postgres
 ```
@@ -74,7 +69,7 @@ You should be able use the created superuser credentials to log in to the admin.
 
 
 
-## Setup Production Database
+## Setup production environment
 
 Open another terminal window and go to the root directory of the project (`/tmm`) and run:
 ```sh
@@ -111,18 +106,3 @@ Jobs:
 Wagtail, grundlegendes Setup mit Homepage:
 
     $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary wagtailcore > blu_beyond/fixtures/wagtail.json
-
-
-### Translate (with gettext)
-
-```scala
-./manage.py makemassages
-
-./manage.py compilemassages
-git push
-```
-or for just commiting a single file or all files you added
-```scala
-git add filename folder/filename.css
-git commit -m "Commit text"
-```
