@@ -1,102 +1,98 @@
-how to get on server from lars:
+# Translation Managmant Microservice (i18next Backend)
+This project provides a Django application that lets you manage translations and diver them to any application that supports the i18next JSON format. This project is intended to be a Free open source and Self-hosted Docker alternative to existing SaaS Solutions (e.g. locize.com).
 
-1. ssh lukas@173.212.252.76
+<!-- TOC -->
 
+- [Setup development environment](#Setup-development-environment)
+- [Setup production environment](#Setup-production-environment)
+- [Usage](#usage)
+- [License](#license)
+- [Links](#links)
 
-Um Lars das Docker Image zu geben:
-
-1. make docker
-
-2. make push
-
-3. docker login registry.woeye.net
-
-#blu wagtail
+<!-- /TOC -->
 
 
+## Setup development environment
+### Setup Django application (local)
 
-## Installation
+The first thing to do is to clone the repository:
 
-1. clone this project
-
-
-2. install venv folder
-
-```scala
-python3 -m venv venv
+```sh
+$ git clone https://github.com/blubeyond/tmm.git
+$ cd tmm
 ```
 
-3. Activate venv form root
+Create a virtual environment to install dependencies in and activate it:
 
-```scala
-source venv/bin/activate
+```sh
+$ python3 -m venv venv
+$ source venv/bin/activate
 ```
 
-4 Install reqierements
-```scala
-pip install -r requirements.txt
+Then install the dependencies:
+
+```sh
+(env)$ pip install -r requirements.txt
+```
+Note the `(env)` in front of the prompt. This indicates that this terminal
+session operates in a virtual environment set up by `virtualenv2`.
+
+Once `pip` has finished downloading the dependencies:
+```sh
+(env)$ python manage.py runserver
+```
+Next you will need to setup the database.
+
+
+### Setup Database (local)
+
+Open another terminal window and go to the root directory of the project (`/tmm`) and run:
+```sh
+$ docker-compose up postgres
 ```
 
-5. Watch file changes via npm
-
-```scala
-cd frontend
-npm run watch
+Switch back to the terminal window where the virtual env is running and create a superuser.
+```sh
+(env)$ ./manage.py createsuperuser --username YOUR_SUPERUSER_NAME
 ```
 
-6. run server
-
-```scala
-./manage.py runserver
+Once the user is created migrate all the changes to the database
+```sh
+(env)$ python manage.py migrate
 ```
 
-## setup postgresql
-
-1. cd {{root (where docker-compose.yml is. Make sure the other databases are off)}}
-2. rm -rf ./pgdata (if you want to remove all data)
-
-2. docker-compose up postgres
-
-3. run ./manage.py createsuperuser --username django
-
-4. run ./manage.py runserver
-
-las. docker-compose -f docker-compose-local.yml down
-### Updating changes in models.py
-
-```scala
-./manage.py makemigrations
-./manage.py migrate
+All done! After you run the command below the Django application should be visable under: `http://127.0.0.1:8000/admin/`.
+```sh
+(env)$ python manage.py runserver
 ```
 
-### git pull
+You should be able use the created superuser credentials to log in to the admin.
 
-just for noobs if you have uncommited code do that:
 
-```scala
-git stash
-```
-now you can pull savely
 
-```scala
-git pull
-```
-reapply stash
+## Setup Production Database
 
-```scala
-git stash apply
+Open another terminal window and go to the root directory of the project (`/tmm`) and run:
+```sh
+$ docker-compose up postgres
 ```
-### git commit
 
-```scala
-git commit -a -m "Commit text here"
-git push
+Switch back to the terminal window where the virtual env is running and create a superuser.
+```sh
+(env)$ ./manage.py createsuperuser --username YOUR_SUPERUSER_NAME
 ```
-or for just commiting a single file or all files you added
-```scala
-git add filename folder/filename.css
-git commit -m "Commit text"
+
+Once the user is created migrate all the changes to the database
+```sh
+(env)$ python manage.py migrate
 ```
+
+All done! After you run the command below the Django application should be visable under: `http://127.0.0.1:8000/admin/`.
+```sh
+(env)$ python manage.py runserver
+```
+
+You should be able use the created superuser credentials to log in to the admin.
 
 # Dump Fixtures
 
@@ -126,40 +122,3 @@ or for just commiting a single file or all files you added
 git add filename folder/filename.css
 git commit -m "Commit text"
 ```
-
-### Whene this Error comes: (comes when deleting a migration)
-Error:
-```scala django.db.utils.ProgrammingError: column "language_key" of relation "menus_menu" does not exist LINE .```
-
-# Fix:
-1. Revert migrations
-```scala ./manage.py migrate footers zero```
-
-1. Reapply migrations so that de database is updated
-```scala ./manage.py migrate```
-
-
-### Deplyment with k8s
-
-1. commit everything to use the right tag.
-
-2.
-```scala
-make docker
-```
-3.
-```scala
-make push
-```
-4. Change tag in /deploy/deployment.yaml line 18 to tag from image (See Make docker)
-
-5.
-```scala
-make deploy
-```
-
-6. check if everything is running ```kubectl -n lukas get pods```
-
-7. check log files: ```kubectl -n lukas logs -f revincus-66df54d6f5-2cxpc -c django```
-
-8. To run commands do with ./manage.py: ```kubectl exec --stdin --tty revincus-7994dfb95d-lfkl5 -c django -- /bin/bash ```
