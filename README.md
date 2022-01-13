@@ -2,15 +2,15 @@
 This project provides a Django application that lets you manage translations and deliver them via REST API to any application that supports the i18next JSON format. This project is intended to be a Free open source and Self-hosted Docker alternative to existing SaaS Solutions (e.g. locize.com).
 
 
-1. [Setup development environment](#1.-setup-development-environment)
-2. [Setup production environment](#2.-setup-production-environment)
-3. [Usage](#3.-usage)
-4. [License](#4.-license)
+1. [ Setup development environment](#setup-development-environment)
+2. [Setup production environment](#setup-production-environment)
+3. [Usage](#usage)
+4. [License](#license)
 <!-- - [Dump Fixtures](#dump-fixtures) -->
 
-<br /><br />
+<br />
 
-## 1. Setup development environment
+## Setup development environment
 ### Setup Django application (local)
 
 The first thing to do is to clone the repository:
@@ -69,7 +69,7 @@ You should be able use the created superuser credentials to log in to the admin.
 
 <br />
 
-## 2. Setup production environment
+## Setup production environment
 
 ### Setup Django application (Docker)
 
@@ -145,7 +145,7 @@ Wagtail, grundlegendes Setup mit Homepage:
 
 <br /><br /> -->
 
-## 3. Usage
+## Usage
 
 User:
 
@@ -162,5 +162,5 @@ Wagtail, grundlegendes Setup mit Homepage:
 
 ![Insert Header Number Sections](https://old.lukasseyfarth.com/kunden/revincus/Bildschirmfoto%202021-11-11%20um%2020.32.54.png)
 
-## 4. License
+## License
 The package is Open Source Software released under the [MIT License](LICENSE). It's developed by blu BEYOND GmbH.
