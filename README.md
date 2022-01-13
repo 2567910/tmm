@@ -3,13 +3,17 @@ This project provides a Django application that lets you manage translations and
 
 <!-- TOC -->
 
-- [Setup development environment](#Setup-development-environment)
-- [Setup production environment](#Setup-production-environment)
+- [Setup development environment](#setup-development-environment)
+- [Setup production environment](#setup-production-environment)
 - [Usage](#usage)
 - [License](#license)
 - [Links](#links)
 
 <!-- /TOC -->
+
+
+
+
 
 
 ## Setup development environment
