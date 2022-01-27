@@ -29,7 +29,7 @@ class Project(models.Model):
         return self.name
 
 
-class TranslationKey(MP_Node): #
+class TranslationKey(MP_Node):
     key = models.CharField(max_length=255, help_text=mark_safe(
         "<p>For more information about the i18next value options <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -43,7 +43,7 @@ class TranslationKey(MP_Node): #
 
 class Translation(models.Model):
     key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)
-    value = models.TextField(max_length=255, blank=True, null=True)
+    value = models.TextField(blank=True, null=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     history = HistoricalRecords()
 
