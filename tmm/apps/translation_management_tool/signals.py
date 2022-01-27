@@ -3,23 +3,21 @@ from django.dispatch import receiver
 
 from tmm.apps.translation_management_tool.models import Translation, TranslationKey, Project, Language
 
-
+# If a new translation key is added, create a new translation for each language
 @receiver(post_save, sender=TranslationKey)
 def create_translations_for_langs (sender, instance, created, **kwargs):
     if created:
         for language in instance.project.languages.all():
             Translation.objects.create(language=language, key=instance)
 
-
+# If a translation key is deleted, delete all translations for that key
 @receiver(post_delete, sender=TranslationKey)
 def create_translations_for_langs (sender, instance, **kwargs):
     for language in instance.project.languages.all():
         data_to_be_deleted = Translation.objects.filter(key = instance, language=language)
         data_to_be_deleted.delete()
 
-
-        # https://docs.djangoproject.com/en/3.2/ref/signals/#:~:text=alias%20being%20used.-,m2m_changed,-%C2%B6
-# If a new language is added to a project it sould
+# If a new language is added to a project then we need to create a translation for each translation key
 @receiver(m2m_changed, sender=Project.languages.through)
 def create_translations_for_new_lang (sender, instance, pk_set, action, **kwargs):
 
