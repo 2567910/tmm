@@ -5,11 +5,8 @@ from django.contrib.admin import AdminSite
 from etc.admin import CustomModelPage
 from django import forms
 from django.core import management
-# from tmm.apps.translation_management_tool.management.commands.load_translations import LoadTranslationsCommand
-
 
 from tmm.apps.translation_management_tool.models import Project, Language, Translation, TranslationKey, JSONImport
-
 
 from import_export.admin import ImportExportModelAdmin
 from import_export.admin import ExportActionMixin
