@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from tmm.apps.translation_management_tool.models import Translation
 from tmm.apps.translation_management_tool.api.serializer import TranslationsSerializer
 from rest_framework.response import Response
-
+from rest_framework.exceptions import ValidationError, ParseError
 
 def get_keys(obj):
     arr = []
@@ -57,8 +57,10 @@ class TranslationsView(APIView):
                     i18nextDict, keys, translation.value)
                 print(i18nextDict)
 
+            if(len(i18nextDict) == 0):
+                raise ValidationError
+
             return Response(i18nextDict)
 
         except:
-            print("ERROR")
-            return Response({"error": "No translations found"})
+            raise ValidationError

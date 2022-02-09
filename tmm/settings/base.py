@@ -63,10 +63,11 @@ MIDDLEWARE = [
 ]
 
 # CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = ['*']
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
+    'http://localhost:3000',
     'https://tmm-react-integration-demo.vercel.app',
 ]
 # CORS_ORIGIN_WHITELIST = ('http://localhost:3000',)
@@ -79,18 +80,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-PARLER_LANGUAGES = {
-    # Replace None with the SITE_ID when you run a multi-site project with the sites framework.
-    # Each SITE_ID can be added as additional entry in the dictionary.
-    None: (
-        {'code': 'en',},
-        {'code': 'de',}
-    ),
-    'default': {
-        'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
-        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
-    }
-}
 
 ROOT_URLCONF = 'tmm.urls'
 
