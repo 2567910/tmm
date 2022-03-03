@@ -62,14 +62,14 @@ MIDDLEWARE = [
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
-    'http://localhost:3000',
-    'https://tmm-react-integration-demo.vercel.app',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8000',
+#     'http://localhost:3000',
+#     'https://tmm-react-integration-demo.vercel.app',
+# ]
 # CORS_ORIGIN_WHITELIST = ('http://localhost:3000',)
 
 REST_FRAMEWORK = {
