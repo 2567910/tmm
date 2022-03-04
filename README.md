@@ -84,7 +84,7 @@ You also have the option to Import existing .json i18next formatted translation 
 
 <img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto 2022-03-04 um 15.43.37.png" width="1000"></img>
 
-To access the translations you have created from, the REST API uses the following pattern: `http://127.0.0.1:8000/translations/{PROJECT_NAME}/{LANGUAGE_CODE}`
+To access the translations you have created from the REST API use the following pattern: `http://127.0.0.1:8000/translations/{PROJECT_NAME}/{LANGUAGE_CODE}`
 
 <img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto 2022-03-04 um 15.57.44.png" width="1000"></img>
 
