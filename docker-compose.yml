@@ -1,0 +1,24 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:12
+    restart: 'no'
+    environment:
+      POSTGRES_DB: 'tmm_db'
+      POSTGRES_USER: 'django'
+      POSTGRES_PASSWORD: 'django'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5432:5432
+  # nginx:
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - karriere_django
+  #   volumes:
+  #     - staticfiles:/staticfiles
+  #     - media:/mediafiles
+  #   ports:
+  #     - 80:80

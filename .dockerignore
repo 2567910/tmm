@@ -1,0 +1,10 @@
+venv
+frontend/node_modules
+frontend/build
+media
+staticfiles
+ansible
+output
+.vscode
+.git
+pgdata

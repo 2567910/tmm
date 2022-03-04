@@ -1,0 +1,1 @@
+# default_app_config = 'tmm.apps.translation_management_tool.TranslationManagementToolConfig'
