@@ -72,7 +72,9 @@ You should be able use the created superuser credentials to log in to the admin.
 
 ## Usage
 
-<img src="https://www.desent.io/img/teaser/pexels-photo-2387532.jpeg" width="128"></img>
+<img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto%202022-03-04%20um%2015.44.42.png" width="1000"></img>
+
+<img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto 2022-03-04 um 15.43.37.png" width="1000"></img>
 <!-- User:
 
     $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary auth.User > blu_beyond/fixtures/user.json
