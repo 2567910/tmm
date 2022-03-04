@@ -64,7 +64,9 @@ All done! After you run the command below the Django application should be visab
 (env)$ python manage.py runserver
 ```
 
-You should be able use the created superuser credentials to log in to the admin.
+You should be able to use the created superuser credentials to log in to the admin.
+
+Disclaimer: This project includes an example dockerfile for Production. But you should configure it to your own needs.
 
 <br />
 
@@ -72,9 +74,21 @@ You should be able use the created superuser credentials to log in to the admin.
 
 ## Usage
 
+Once you have a Django application running, and you are logged in, you should see the screen Below.
+
 <img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto%202022-03-04%20um%2015.44.42.png" width="1000"></img>
 
+If you are logged in as an admin you should be able to create, delete and update Projects, Languages, TranslationKey and Translations.
+
+You also have the option to Import existing .json i18next formatted translation files. Upon import, all data is overwritten, so be aware. Imported files do not have the rights to delete Translations or TranslationKeys.
+
 <img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto 2022-03-04 um 15.43.37.png" width="1000"></img>
+
+To access the translations you have created from, the REST API uses the following pattern: `http://127.0.0.1:8000/translations/{PROJECT_NAME}/{LANGUAGE_CODE}`
+
+<img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto 2022-03-04 um 15.57.44.png" width="1000"></img>
+
+We have also created a [demo React integration](https://github.com/2567910/tmm_react_integration). Feel free to use the integration code from there. 
 <!-- User:
 
     $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary auth.User > blu_beyond/fixtures/user.json
