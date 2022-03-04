@@ -15,7 +15,7 @@ test
 The first thing to do is to clone the repository:
 
 ```sh
-$ git clone https://github.com/blubeyond/tmm.git
+$ git clone https://github.com/2567910/tmm.git
 $ cd tmm
 ```
 
