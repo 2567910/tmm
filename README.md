@@ -65,9 +65,9 @@ All done! After you run the command below the Django application should be visab
 ```
 
 You should be able to use the created superuser credentials to log in to the admin.
-
-Disclaimer: This project includes an example dockerfile for Production. But you should configure it to your own needs.
-
+ 
+> **Disclaimer**: This project includes an example dockerfile for Production. But you should configure it to your own needs.
+> 
 <br />
 
 
