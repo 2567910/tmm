@@ -1,4 +1,4 @@
-# Django
+# TODO: Include a documentation in the readme
 FROM python:3.9.10-alpine
 LABEL maintainer="lars.hoss@posteo.de"
 ENV PYTHONUNBUFFERED=1 \
