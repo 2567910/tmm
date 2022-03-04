@@ -3,7 +3,6 @@ This project provides a Django application that lets you manage translations and
 test
 
 1. [ Setup development environment](#setup-development-environment)
-2. [Setup production environment](#setup-production-environment)
 3. [Usage](#usage)
 4. [License](#license)
 <!-- - [Dump Fixtures](#dump-fixtures) -->
@@ -69,40 +68,7 @@ You should be able use the created superuser credentials to log in to the admin.
 
 <br />
 
-## Setup production environment
 
-### Setup Django application (Docker)
-
-The first thing to do is to clone the repository:
-
-```sh
-$ git clone https://github.com/blubeyond/tmm.git
-$ cd tmm
-```
-
-<br />
-
-### Setup Database (Docker)
-
-
-
-<br /><br />
-
-<!-- # Dump Fixtures
-
-User:
-
-    $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary auth.User > blu_beyond/fixtures/user.json
-
-Jobs:
-
-    $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary translation_management_tool > tmm/apps/translation_management_tool/fixtures/project.json
-
-Wagtail, grundlegendes Setup mit Homepage:
-
-    $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary wagtailcore > blu_beyond/fixtures/wagtail.json
-
-<br /><br /> -->
 
 ## Usage
 
@@ -122,4 +88,4 @@ Wagtail, grundlegendes Setup mit Homepage:
 ![Insert Header Number Sections](https://old.lukasseyfarth.com/kunden/revincus/Bildschirmfoto%202021-11-11%20um%2020.32.54.png) -->
 
 ## License
-The package is Open Source Software released under the [MIT License](LICENSE). It's developed by blu BEYOND GmbH.
+The package is Open Source Software released under the [MIT License](LICENSE). It's developed by Lukas Seyfarth.
