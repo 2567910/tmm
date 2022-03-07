@@ -1,0 +1,210 @@
+{
+  "nested_0": {
+    "deep": {
+      "inner1": "value1",
+      "inner2": "value2",
+      "inner3": "value3",
+      "inner4": "value4",
+      "inner5": "value5",
+      "inner6": "value6",
+      "inner7": "value7",
+      "inner8": "value8",
+      "inner9": "value9",
+      "inner10": "value10",
+      "inner11": {
+        "inner11_1": "value11_1",
+        "inner11_2": "value11_2",
+        "inner11_3": "value11_3",
+        "inner11_4": "value11_4",
+        "inner11_5": "value11_5",
+        "inner11_6": "value11_6",
+        "inner11_7": "value11_7",
+        "inner11_8": "value11_8",
+        "inner11_9": "value11_9",
+        "inner11_10": "value11_10"
+      }
+    }
+  },
+    "nested_1": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    },
+    "nested_2": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    },
+    "nested_3": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    },
+    "nested_4": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    },
+    "nested_5": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    },
+    "nested_6": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    },
+    "nested_7": {
+      "deep": {
+        "inner1": "value1",
+        "inner2": "value2",
+        "inner3": "value3",
+        "inner4": "value4",
+        "inner5": "value5",
+        "inner6": "value6",
+        "inner7": "value7",
+        "inner8": "value8",
+        "inner9": "value9",
+        "inner10": "value10",
+        "inner11": {
+          "inner11_1": "value11_1",
+          "inner11_2": "value11_2",
+          "inner11_3": "value11_3",
+          "inner11_4": "value11_4",
+          "inner11_5": "value11_5",
+          "inner11_6": "value11_6",
+          "inner11_7": "value11_7",
+          "inner11_8": "value11_8",
+          "inner11_9": "value11_9",
+          "inner11_10": "value11_10"
+        }
+      }
+    }
+}
