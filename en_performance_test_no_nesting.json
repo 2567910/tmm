@@ -1,4 +1,5 @@
 {
+"languages": {
     "keyPluralMultipleEgArabic_0": "the plural form 0",
     "keyPluralMultipleEgArabic_1": "the plural form 1",
     "keyPluralMultipleEgArabic_2": "the plural form 2",
@@ -199,4 +200,5 @@
     "keyPluralMultipleEgArabic_197": "the plural form 97",
     "keyPluralMultipleEgArabic_198": "the plural form 98",
     "keyPluralMultipleEgArabic_199": "the plural form 99"
+}
 }

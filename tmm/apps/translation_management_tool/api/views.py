@@ -1,8 +1,12 @@
 from rest_framework.views import APIView
+import json
+from django.http import Http404
 from tmm.apps.translation_management_tool.models import Translation, Project
 from tmm.apps.translation_management_tool.api.serializer import TranslationsSerializer
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.exceptions import ValidationError, ParseError
+from django.shortcuts import get_object_or_404
 
 import logging
 
@@ -10,84 +14,59 @@ LOGGER = logging.getLogger(__name__)
 
 
 
-def get_keys_from_ancestors(obj):
-    ancestors = obj.key.get_ancestors()
-    if ancestors:
-        arr = [an.key for an in ancestors]
-        arr.append(obj.key.key)
-        return arr
+def set_bulk_in_dict_recursive(i18nextDict, bulk, root_translation_list):
 
-    return [obj.key.key]
+    for object in bulk:
+        key = object["data"]["key"]
+        root_translation = {}
+
+        for root_translation in root_translation_list:
+            if(root_translation.key.key == key):
+                root_translation = root_translation
+                break
+
+        try:
+            i18nextDict[key] = dict()
+            set_bulk_in_dict_recursive(i18nextDict[key], object["children"], root_translation_list)
+
+        except:
+            i18nextDict[key] = root_translation.value
+
+        root_translation_list.remove(root_translation)
 
 
-def set_value_in_dict_recursive(i18nextDict, keysArray, value):
-    if (len(keysArray) == 1):
-        i18nextDict[keysArray[0]] = value
-    else:
-        if (type(i18nextDict[keysArray[0]]) is not dict):
-            i18nextDict[keysArray[0]] = dict()
-        set_value_in_dict_recursive(
-            i18nextDict[keysArray[0]], keysArray[1:], value)
     return i18nextDict
 
 
-# class TranslationsView(APIView):
-#     # GET /translations/project/lang
-#     serializer_class = TranslationsSerializer
-
-#     def get_queryset(self):
-#         translations = Translation.objects.all()
-#         return translations
-
 def translations_view(request, *args, **kwargs):
 
-    try:
-        lang = kwargs.get("lang")
-        project_name = kwargs.get("project")
+    lang = kwargs.get("lang")
+    project_name = kwargs.get("project")
 
-        project = Project.objects.get_or_404(name=project_name)
+    #projectId = Project.objects.raw("SELECT id FROM translation_management_tool_project WHERE name = %s", [project_name])[0].id
 
-        translations_raw = Translation.objects.filter(
-            language__code=lang, key__project_id=project.id)
-        translation_list = list(translations_raw)
+    #translations_raw_sql_raw = Translation.objects.raw('SELECT * FROM translation_management_tool_translation WHERE key_id IN (SELECT id FROM translation_management_tool_translationkey WHERE project_id = %s) AND lang = %s', [projectId, lang])
+    #translations_raw_sql_raw2 = Translation.objects.raw('SELECT * FROM translation_management_tool_translation WHERE (translation_management_tool_project.name =  %s AND translation_management_tool_language.code =  %s)', [projectId, lang])
+    # .project = %s AND lang = %s', [projectId, lang])
+    #('translation_management_tool_translationkey'.'depth' = 1 AND 'translation_management_tool_project'.'name' = 'test' AND 'translation_management_tool_language'.'code' = 'de')
+    # LOGGER.info(translations_raw_sql_raw2)
 
-        translations_sortet_by_depth = sorted(
-            translation_list, key=lambda d: d.key.get_depth())
+    #LOG: statement: SELECT 'translation_management_tool_translation"."id", "translation_management_tool_translation"."key_id", "translation_management_tool_translation"."value", "translation_management_tool_translation"."language_id" FROM "translation_management_tool_translation" INNER JOIN "translation_management_tool_translationkey" ON ("translation_management_tool_translation"."key_id" = "translation_management_tool_translationkey"."id") INNER JOIN "translation_management_tool_project" ON ("translation_management_tool_translationkey"."project_id" = "translation_management_tool_project"."id") INNER JOIN "translation_management_tool_language" ON ("translation_management_tool_translation"."language_id" = "translation_management_tool_language"."id") WHERE ("translation_management_tool_translationkey"."depth" = 1 AND "translation_management_tool_project"."name" = 'test' AND "translation_management_tool_language"."code" = 'de')
 
-        i18nextDict = dict()
+    translations_raw = Translation.objects.filter(
+        language__code=lang, key__project__name=project_name)
+    translation_list = list(translations_raw)
 
-        # TEST Start --------------------------------------------------
+    i18nextDict = dict()
 
-        # for translation in translation_list:
-        #     path = translation.key.path
-        #     LOGGER.info('path %s', path)
-
-
-        # only_root_translations = list(filter(lambda translation: translation.key.depth == 1, translation_list))
-
-        # for translation in only_root_translations:
-        #     LOGGER.info(translation.key.key)
-        #     # keys = get_keys_from_ancestors(translation)
-        #     test = translation.key.dump_bulk(parent=translation.key, keep_ids=True)
-        #     LOGGER.info(test)
-        #     keys = get_keys_from_ancestors(tanslation)
-        #     set_value_in_dict_recursive(
-        #         i18nextDict, keys, tanslation.value)
+    for translation in translation_list:
+        LOGGER.info(translation.key.key)
+        bulk = translation.key.dump_bulk(parent=translation.key, keep_ids=False)
+        set_bulk_in_dict_recursive(i18nextDict, bulk, translation_list)
 
 
-        # TEST END --------------------------------------------------
+    if(len(i18nextDict) == 0): # if no translations found
+        raise Http404("No translations found")
 
-        for translation in translations_sortet_by_depth:
-            keys = get_keys_from_ancestors(translation)
-
-            i18nextDict = set_value_in_dict_recursive(
-                i18nextDict, keys, translation.value)
-            print(i18nextDict)
-
-        if(len(i18nextDict) == 0): # if no translations found
-            raise ValidationError
-
-        return Response(i18nextDict)
-
-    except:
-        raise ValidationError
+    response = JsonResponse(i18nextDict)
+    return response
