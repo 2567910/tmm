@@ -35,15 +35,16 @@ class JSONImportAdmin(admin.ModelAdmin):
 
 class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     readonly_fields = (['key', 'language'])
-    list_display = ('get_full_key', 'get_project_name', 'language', 'value')
+    list_display = ('key', 'get_project_name', 'language', 'value')
     list_filter = ('language', 'key__project')
     search_fields = (['key','get_project_name', 'language', 'value'])
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
+        # qs.exclude(value=isinstance(value, dict))
 
         for tanslation in qs:
-            if TranslationKey.objects.get(pk=tanslation.key.pk).get_children():
+            if (tanslation.value.startswith('{')):
                 qs = qs.exclude(key__pk=tanslation.key.pk)
         return qs
 
@@ -51,15 +52,15 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     def get_project_name(self, obj):
         return obj.key.project
 
-    # def has_add_permission(self, request, obj=None):
-    #     return False
+    def has_add_permission(self, request, obj=None):
+        return False
 
-    @admin.display(description='Key')
-    def get_full_key(self, obj):
-        if (obj.key.get_ancestors()):
-            return ".".join([lang.key for lang in obj.key.get_ancestors()]) + "." + obj.key.key
-        else:
-            return obj.key.key
+    # @admin.display(description='Key')
+    # def get_full_key(self, obj):
+    #     if (obj.key.get_ancestors()):
+    #         return ".".join([lang.key for lang in obj.key.get_ancestors()]) + "." + obj.key.key
+    #     else:
+    #         return obj.key.key
 
     fieldsets = [
         ('Meta', {
@@ -70,8 +71,7 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
             'description': '<div class="help">%s</div>' % CONTENT_HELP_TEXT,
         }),
     ]
-class TranslationKeyAdmin(TreeAdmin):
-    form = movenodeform_factory(TranslationKey)
+class TranslationKeyAdmin(admin.ModelAdmin):
     list_display = ('key', 'project')
     list_filter = (['project'])
     search_fields = (['key','project'])

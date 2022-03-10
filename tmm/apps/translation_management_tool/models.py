@@ -29,7 +29,7 @@ class Project(models.Model):
         return self.name
 
 
-class TranslationKey(MP_Node):
+class TranslationKey(models.Model):
     key = models.CharField(max_length=255, help_text=mark_safe(
         "<p>v1.0.0 - For more information about the i18next value options <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -39,7 +39,7 @@ class TranslationKey(MP_Node):
         verbose_name_plural = "Translationkeys"
 
     def __str__(self):
-        return f"{self.project.name}: {self.key} ({self.depth})"
+        return f"{self.key}"
 
 class Translation(models.Model):
     key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)

@@ -42,10 +42,11 @@ class Command(BaseCommand):
                     deleted = Translation.objects.filter(key__project=project, language=lang).delete()
 
                 for raw_key, raw_value in rawDict.items():
-                    root_key = TranslationKey.objects.filter(key=raw_key, project=project, depth=1).first()
+                    print(raw_key, raw_value) # this is only th root Key
+                    root_key = TranslationKey.objects.filter(key=raw_key, project=project).first()
 
                     if not root_key:
-                        root_key = TranslationKey.add_root(key=raw_key, project=project)
+                        root_key = TranslationKey.objects.create(key=raw_key, project=project)
 
                     if isinstance(raw_value, str):
                         Translation.objects.filter(key=root_key, language=lang).update(value=raw_value)
@@ -62,12 +63,16 @@ class Command(BaseCommand):
 
     def create_child(self, parent_node: TranslationKey, raw_dict: dict, lang: Language):
         for child_key, child_value in raw_dict.items():
-            child_node = parent_node.get_children().filter(key=child_key, project=parent_node.project).first()
+
+            full_child_key = parent_node.key + '.' + child_key
+            child_node = TranslationKey.objects.filter(key=full_child_key, project=parent_node.project).first()
+
             if not child_node:
-                child_node = parent_node.add_child(key=child_key, project=parent_node.project)
+                child_node = TranslationKey.objects.create(key=full_child_key, project=parent_node.project)
 
             if isinstance(child_value, str):
-                Translation.objects.filter(key=child_node, language=lang).update(value=child_value)
+                # LOGGER.info('Loading tags from %s ...', child_node.key)
+                Translation.objects.filter(key=child_node, language=lang).update(value=child_value) # dose not work for some reason
 
             elif isinstance(child_value, dict):
                 self.create_child(child_node, child_value, lang)
