@@ -6,6 +6,7 @@ from django.conf.global_settings import LANGUAGES
 from treebeard.mp_tree import MP_Node
 from simple_history.models import HistoricalRecords
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Language(models.Model):
@@ -21,6 +22,8 @@ class Language(models.Model):
 class Project(models.Model):
     name = models.CharField(unique=True, db_index=True, max_length=255)
     languages = models.ManyToManyField(Language)
+    fallback_language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='+', null=True, blank=True)
+    translatior = models.ManyToManyField(User)
 
     class Meta:
         verbose_name = "Project"

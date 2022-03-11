@@ -44,8 +44,11 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
         # qs.exclude(value=isinstance(value, dict))
 
         for tanslation in qs:
-            if (tanslation.key.has_children):
-                qs = qs.exclude(key__pk=tanslation.key.pk)
+            if ((request.user == tanslation.key.project.translatior.all()[0])):
+                if (tanslation.key.has_children):
+                    qs = qs.exclude(key__pk=tanslation.key.pk)
+            else:
+                return qs.none()
         return qs
 
     @admin.display(description='Projekt', ordering='key__project')
@@ -67,6 +70,7 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
             'fields':('key', 'language'),
         }),
         ('Value', {
+            # 'orginal_text': '<div class="help">%s</div>' % CONTENT_HELP_TEXT,
             'fields':(['value']),
             'description': '<div class="help">%s</div>' % CONTENT_HELP_TEXT,
         }),
