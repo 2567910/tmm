@@ -1,3 +1,4 @@
+from importlib.metadata import requires
 from django.db import models
 from django.core import management
 from django.utils.safestring import mark_safe
@@ -33,6 +34,7 @@ class TranslationKey(models.Model):
     key = models.CharField(max_length=255, help_text=mark_safe(
         "<p>v1.0.0 - For more information about the i18next value options <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    has_children = models.BooleanField(blank=True, default=False)
 
     class Meta:
         verbose_name = "Translationkey"

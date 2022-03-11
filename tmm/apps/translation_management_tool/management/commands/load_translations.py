@@ -62,8 +62,10 @@ class Command(BaseCommand):
 
 
     def create_child(self, parent_node: TranslationKey, raw_dict: dict, lang: Language):
-        for child_key, child_value in raw_dict.items():
+        parent_node.has_children = True
+        parent_node.save()
 
+        for child_key, child_value in raw_dict.items():
             full_child_key = parent_node.key + '.' + child_key
             child_node = TranslationKey.objects.filter(key=full_child_key, project=parent_node.project).first()
 
@@ -71,8 +73,7 @@ class Command(BaseCommand):
                 child_node = TranslationKey.objects.create(key=full_child_key, project=parent_node.project)
 
             if isinstance(child_value, str):
-                # LOGGER.info('Loading tags from %s ...', child_node.key)
-                Translation.objects.filter(key=child_node, language=lang).update(value=child_value) # dose not work for some reason
+                Translation.objects.filter(key=child_node, language=lang).update(value=child_value)
 
             elif isinstance(child_value, dict):
                 self.create_child(child_node, child_value, lang)

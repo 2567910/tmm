@@ -44,7 +44,7 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
         # qs.exclude(value=isinstance(value, dict))
 
         for tanslation in qs:
-            if (tanslation.value.startswith('{')):
+            if (tanslation.key.has_children):
                 qs = qs.exclude(key__pk=tanslation.key.pk)
         return qs
 
@@ -72,6 +72,7 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
         }),
     ]
 class TranslationKeyAdmin(admin.ModelAdmin):
+    # readonly_fields = (['is_dict'])
     list_display = ('key', 'project')
     list_filter = (['project'])
     search_fields = (['key','project'])
