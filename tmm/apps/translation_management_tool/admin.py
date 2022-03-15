@@ -9,7 +9,7 @@ from tmm.apps.translation_management_tool.models import Project, Language, Trans
 
 from import_export.admin import ImportExportModelAdmin
 from import_export.admin import ExportActionMixin
-from tmm.apps.translation_management_tool.views import my_view
+# from tmm.apps.translation_management_tool.views import my_view
 from import_export import resources
 from import_export.fields import Field
 
@@ -44,7 +44,7 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
         # qs.exclude(value=isinstance(value, dict))
 
         for tanslation in qs:
-            if ((request.user == tanslation.key.project.translatior.all()[0])):
+            if ((request.user == tanslation.key.project.translator.all()[0])):
                 if (tanslation.key.has_children):
                     qs = qs.exclude(key__pk=tanslation.key.pk)
             else:

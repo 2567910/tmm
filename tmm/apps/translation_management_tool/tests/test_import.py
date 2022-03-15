@@ -1,19 +1,20 @@
+import unittest
 from django.test import TestCase
 import logging
 from django.core import management
-from django.core.management.commands import loaddata
 
 from tmm.apps.translation_management_tool.models import Language, Project, Translation, TranslationKey
 
 LOGGER = logging.getLogger(__name__)
-# Create your tests here.
+
+@unittest.skip
 class ImportTest(TestCase):
 
     fixtures = ['project.json']
 
     def test_import(self):
 
-        management.call_command('load_translations', './import_de.json')
+        management.call_command('load_translations', './import_de.json', 'import', 'de')
         self.assertEqual(Translation.objects.count(), 38)
 
         nested_key = TranslationKey.objects.filter(depth=3).first()

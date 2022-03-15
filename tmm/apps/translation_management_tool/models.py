@@ -23,7 +23,7 @@ class Project(models.Model):
     name = models.CharField(unique=True, db_index=True, max_length=255)
     languages = models.ManyToManyField(Language)
     fallback_language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='+', null=True, blank=True)
-    translatior = models.ManyToManyField(User)
+    translator = models.ManyToManyField(User)
 
     class Meta:
         verbose_name = "Project"

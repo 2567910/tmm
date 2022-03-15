@@ -26,7 +26,7 @@ urlpatterns = [
     # path('/admin', admin.site.urls),
     path('admin/',    admin.site.urls),
     path('', include(router.urls)),
-    path('translations/',    include('tmm.apps.translation_management_tool.api.urls')),
+    path('translations/',    include('tmm.apps.translation_management_tool.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
