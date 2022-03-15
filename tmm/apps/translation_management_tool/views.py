@@ -50,10 +50,11 @@ def translations_view(request, *args, **kwargs):
                     if direct_parent is None:
                         LOGGER.info("is has no direct_parent (is root node)")
                         parent = i18nextDict.setdefault(parent_name, {})
+                        # parent= dict()
                     else:
                         LOGGER.info("This already has a direct parent: %s", direct_parent)
-                        parent = direct_parent[parent_name] = dict()
-                        # parent = direct_parent.setdefault(parent_name, {})
+                        # parent = direct_parent[parent_name] = dict()
+                        parent = direct_parent.setdefault(parent_name, {})
                     LOGGER.info('>>>>>>>>> loop parent %s (direct_parent %s): parent %s %s', parent_name, direct_parent, parent, type(parent))
                     direct_parent = parent
                 LOGGER.info('>>>>>>>>>>>>>>> direct parent %s %s %s', direct_parent, type(direct_parent), type(name))
