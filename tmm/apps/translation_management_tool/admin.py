@@ -43,11 +43,10 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
 
         for tanslation in qs:
             if ((request.user == tanslation.key.project.translator.all()[0])):
-                if (tanslation.key.has_children):
-                    qs = qs.exclude(key__pk=tanslation.key.pk)
-            else:
-                return qs.none()
-        return qs
+                return qs
+
+            return qs.none()
+
 
     @admin.display(description='Projekt', ordering='key__project')
     def get_project_name(self, obj):
