@@ -1,6 +1,8 @@
+from array import array
 import json
 import logging
 import os
+import string
 
 from django.apps import apps
 from django.core.management import BaseCommand
@@ -41,35 +43,55 @@ class Command(BaseCommand):
                 if options['clear']:
                     deleted = Translation.objects.filter(key__project=project, language=lang).delete()
 
+                # Here the real code starts:
+
                 for raw_key, raw_value in rawDict.items():
-                    root_key = TranslationKey.objects.filter(key=raw_key, project=project, depth=1).first()
+                    print(raw_key, raw_value) # this is only th root Key
+
+                    root_key = TranslationKey.objects.filter(key=raw_key, project=project).first()
 
                     if not root_key:
-                        root_key = TranslationKey.add_root(key=raw_key, project=project)
+                        if isinstance(raw_value, str):
+                            root_key = TranslationKey.objects.create(key=raw_key, project=project)
+                            Translation.objects.filter(key=root_key, language=lang).update(value=raw_value) # root_key
 
-                    if isinstance(raw_value, str):
-                        Translation.objects.filter(key=root_key, language=lang).update(value=raw_value)
+                        elif isinstance(raw_value, dict):
+                            self.create_child(raw_key, raw_value, lang, project)
 
-                    elif isinstance(raw_value, dict):
-                        # recurse into children
-                        self.create_child(root_key, raw_value, lang)
+                        else:
+                            raise Exception('Expecting string or dictionary but got', raw_value)
+
                     else:
-                        raise Exception('Expecting string or dictionary but got', raw_value)
+                        if isinstance(raw_value, str):
+                            Translation.objects.filter(key=root_key, language=lang).update(value=raw_value)
 
-                    if (type(rawDict[raw_key]) is not dict):
-                        resultDict[raw_key] = {"value": rawDict, "parent": None}
+                        elif isinstance(raw_value, dict):
+                            self.create_child(raw_key, raw_value, lang, project)
+
+                        else:
+                            raise Exception('Expecting string or dictionary but got', raw_value)
 
 
-    def create_child(self, parent_node: TranslationKey, raw_dict: dict, lang: Language):
+    def create_child(self, keys: string, raw_dict: dict, lang: Language, project: Project):
+
         for child_key, child_value in raw_dict.items():
-            child_node = parent_node.get_children().filter(key=child_key, project=parent_node.project).first()
+            full_child_key = keys + '.' + child_key
+            child_node = TranslationKey.objects.filter(key=full_child_key, project=project).first()
+
             if not child_node:
-                child_node = parent_node.add_child(key=child_key, project=parent_node.project)
+                if isinstance(child_value, str):
+                    child_node = TranslationKey.objects.create(key=full_child_key, project=project)
+                    Translation.objects.filter(key=child_node, language=lang).update(value=child_value)
 
-            if isinstance(child_value, str):
-                Translation.objects.filter(key=child_node, language=lang).update(value=child_value)
+                elif isinstance(child_value, dict):
+                    self.create_child(full_child_key, child_value, lang, project)
 
-            elif isinstance(child_value, dict):
-                self.create_child(child_node, child_value, lang)
+                else:
+                        raise Exception('Expecting string or dictionary but got', child_value)
+
             else:
-                raise Exception('Expecting string or dictionary but got %s for key %s', child_value, child_key)
+                if isinstance(child_value, str):
+                    Translation.objects.filter(key=child_node, language=lang).update(value=child_value)
+
+                elif isinstance(child_value, dict):
+                    self.create_child(full_child_key, child_value, lang, project)

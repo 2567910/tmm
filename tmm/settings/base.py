@@ -43,9 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'tmm.apps.translation_management_tool',
-    'treebeard',
     'simple_history',
     'import_export',
 
@@ -74,13 +72,7 @@ CORS_ALLOW_HEADERS = ['*']
 # ]
 # CORS_ORIGIN_WHITELIST = ('http://localhost:3000',)
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-        'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
+
 
 
 ROOT_URLCONF = 'tmm.urls'

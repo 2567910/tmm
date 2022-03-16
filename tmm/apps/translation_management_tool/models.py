@@ -1,10 +1,12 @@
+from importlib.metadata import requires
 from django.db import models
 from django.core import management
 from django.utils.safestring import mark_safe
 from django.conf.global_settings import LANGUAGES
-from treebeard.mp_tree import MP_Node
+
 from simple_history.models import HistoricalRecords
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Language(models.Model):
@@ -20,6 +22,8 @@ class Language(models.Model):
 class Project(models.Model):
     name = models.CharField(unique=True, db_index=True, max_length=255)
     languages = models.ManyToManyField(Language)
+    fallback_language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='+', null=True, blank=True)
+    translator = models.ManyToManyField(User)
 
     class Meta:
         verbose_name = "Project"
@@ -29,9 +33,9 @@ class Project(models.Model):
         return self.name
 
 
-class TranslationKey(MP_Node):
+class TranslationKey(models.Model):
     key = models.CharField(max_length=255, help_text=mark_safe(
-        "<p>v1.0.0 - For more information about the i18next value options <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
+        "<p>For more information about the i18next value options <a href='https://www.i18next.com/misc/json-format' target='_blank'>click here</a>.</p>"))
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     class Meta:
@@ -39,7 +43,7 @@ class TranslationKey(MP_Node):
         verbose_name_plural = "Translationkeys"
 
     def __str__(self):
-        return f"{self.project.name}: {self.key} ({self.depth})"
+        return f"{self.key}"
 
 class Translation(models.Model):
     key = models.ForeignKey(TranslationKey, on_delete=models.CASCADE)

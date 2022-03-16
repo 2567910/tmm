@@ -1,0 +1,21 @@
+{
+    "title": "Unsere tolle Seite",
+    "common": {
+    "actions": {
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "ok": "OK"
+    },
+    "auth": {
+      "actions": {
+        "signOn": "Registrieren",
+        "signIn": "Anmelden",
+        "signOut": "Abmelden"
+      }
+    },
+    "search": {
+      "hit": "Resultat",
+      "hit_plural": "Resultate"
+    }
+  }
+}
