@@ -3,7 +3,7 @@ from django.db import models
 from django.core import management
 from django.utils.safestring import mark_safe
 from django.conf.global_settings import LANGUAGES
-from treebeard.mp_tree import MP_Node
+
 from simple_history.models import HistoricalRecords
 from django.utils import timezone
 from django.contrib.auth.models import User

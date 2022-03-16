@@ -1,10 +1,8 @@
 from re import L
-from rest_framework.views import APIView
 import json
 from django.http import Http404
 from tmm.apps.translation_management_tool.models import Translation, Project
 from django.http import JsonResponse
-from rest_framework.exceptions import ValidationError, ParseError
 from django.shortcuts import get_object_or_404
 
 import logging
