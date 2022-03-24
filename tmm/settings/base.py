@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tmm.apps.translation_management_tool',
+    'tmm.apps.translation_management_tool.apps.TranslationManagementToolConfig',
     'simple_history',
     'import_export',
 
