@@ -1,6 +1,6 @@
 # TODO: Include a documentation in the readme
 FROM python:3.9.10-alpine
-LABEL maintainer="lars.hoss@posteo.de"
+LABEL maintainer="kontakt@lukasseyfarth.com"
 ENV PYTHONUNBUFFERED=1 \
     LANG=de_DE.UTF-8 \
     DJANGO_SETTINGS_MODULE=tmm.settings.production \
