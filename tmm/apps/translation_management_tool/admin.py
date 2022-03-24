@@ -29,21 +29,22 @@ class TranslationsAdmin(SimpleHistoryAdmin, ImportExportModelAdmin):
     list_filter = (['language', 'key__project__name'])
     search_fields = (['value', 'key__key', 'key__project__name', 'language__code'])
 
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        for tanslation in qs:
-            if ((request.user == tanslation.key.project.translator.all()[0])):
-                return qs
+        if qs:
+            for tanslation in qs:
+                if ((request.user == tanslation.key.project.translator.all()[0])):
+                    return qs
 
-            return qs.none()
+                return qs.none()
+        return qs.none()
+
 
 
     # @admin.display(description='Projekt', ordering='key__project')
     # def get_project_name(self, obj):
     #     return obj.key.project
-
-    def has_add_permission(self, request, obj=None):
-        return False
 
     fieldsets = [
         ('Meta', {

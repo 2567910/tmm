@@ -49,15 +49,17 @@ Open another terminal window and go to the root directory of the project and run
 $ docker-compose up postgres
 ```
 
-Switch back to the terminal window where the virtual env is running and create a superuser.
+Switch back to the terminal window where the virtual env and migrate
+```sh
+(env)$ python manage.py migrate
+```
+
+Create a superuser
 ```sh
 (env)$ ./manage.py createsuperuser --username YOUR_SUPERUSER_NAME
 ```
 
-Once the user is created migrate all the changes to the database
-```sh
-(env)$ python manage.py migrate
-```
+
 
 All done! After you run the command below the Django application should be visable under: `http://127.0.0.1:8000/admin/`.
 ```sh
@@ -65,9 +67,9 @@ All done! After you run the command below the Django application should be visab
 ```
 
 You should be able to use the created superuser credentials to log in to the admin.
- 
+
 > **Disclaimer**: This project includes an example dockerfile for Production. But you should configure it to your own needs.
-> 
+>
 <br />
 
 
@@ -88,7 +90,7 @@ To access the translations you have created from the REST API use the following 
 
 <img src="https://old.lukasseyfarth.com/kunden/blu-beyond/Bildschirmfoto 2022-03-04 um 15.57.44.png" width="1000"></img>
 
-We have also created a [demo React integration](https://github.com/2567910/tmm_react_integration). Feel free to use the integration code from there. 
+We have also created a [demo React integration](https://github.com/2567910/tmm_react_integration). Feel free to use the integration code from there.
 <!-- User:
 
     $ ./manage.py dumpdata --indent 2 --natural-foreign --natural-primary auth.User > blu_beyond/fixtures/user.json
