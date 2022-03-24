@@ -41,6 +41,7 @@ class TranslationKey(models.Model):
     class Meta:
         verbose_name = "Translationkey"
         verbose_name_plural = "Translationkeys"
+        unique_together = ('key', 'project')
 
     def __str__(self):
         return f"{self.key}"
