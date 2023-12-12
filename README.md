@@ -1,4 +1,4 @@
-> :warning: **If you are using mobile browser**: Be very careful here!
+> :warning: **This project is discontinued" ** We have developed a better solution feel free to chck it out here: [Weploy.ai](https://github.com/desentio/weploy-translate)
 
 
 # Translation Managmant Microservice
