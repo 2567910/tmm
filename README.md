@@ -1,3 +1,6 @@
+> :warning: **If you are using mobile browser**: Be very careful here!
+
+
 # Translation Managmant Microservice
 This project provides a Django application that lets you manage translations and deliver them via REST API to any application that supports the i18next JSON format. This project is intended to be a Free open source and Self-hosted Docker alternative to existing SaaS Solutions (e.g. locize.com).
 test
