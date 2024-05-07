@@ -1,4 +1,4 @@
-> ⚠️ This project is discontinued" ** We have developed a better solution feel free to chck it out here: [Weploy.ai](https://github.com/desentio/weploy-translate)
+> We recommend using our translation as a service tool: [Weploy.ai](https://github.com/desentio/weploy-translate)
 
 
 # Translation Managmant Microservice
